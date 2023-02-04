@@ -6,31 +6,77 @@
     <title>Real world fetch</title>
   </head>
   <body>
+    <!-- CHALLENGE - Form  
+
+    <form>
+      <label for="name">Name</label>
+      <input type="text" id="name">
+
+      <label for="email">Email</label>
+      <input type="email" id="email">
+
+      <button type="submit" id="submit">Log in</input>
+    </form> -->
+
+    <!-- WORKSHOP  -->
+
+    <form>
+      <label for="search">Pokémon name</label>
+      <input type="search" id="search">
+
+      <button type="submit" id="submit">Search</button>
+
+    </form>
+
     <script>
 
-      /* CHALLENGE 1 & 2*/
+      /* WORKSHOP */
 
-/* Get user using fetch */
-      const get_user = fetch("https://echo.oliverjam.workers.dev/status/404")
+      const myForm = document.querySelector("form");
+
+      myForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const formData = new FormData(myForm);
+      const data = formData.get("pokemon");
+
+      fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+        .then((response) => {
+          if (!response.ok) throw new Error(response.status);
+          return response.json();
+        })
+        .then((json) => console.log(json))
+        .catch((error) => console.error(error));
+  });
+      
 
 
-/* Test to see if result is !result.ok */
-      get_user
-        .then((result)=> {
-        if (!result.ok); {
-          /* Create new error*/
-          const error = new Error(result.status);
-          /* Throw error */
-          throw error;
-        }
-        console.log(result)
-      })
-      /* Use .catch to handle errors */
-        .catch((error)=>console.log(error))
 
-    /* CHALLENGE 3 */
+      
 
-    fetch("https://echo.oliverjam.workers.dev/json", {
+      /* CHALLENGES */
+
+// /* Get user using fetch */
+//       const get_user = fetch("https://echo.oliverjam.workers.dev/status/404")
+
+
+// /* Test to see if result is !result.ok */
+//       get_user
+//         .then((result)=> {
+//         if (!result.ok); {
+//           /* Create new error*/
+//           const error = new Error(result.status);
+//           /* Throw error */
+//           throw error;
+//         }
+//         console.log(result)
+//       })
+//       /* Use .catch to handle errors */
+//         .catch((error)=>console.log(error))
+        
+
+
+/*    fetch("https://echo.oliverjam.workers.dev/json", {
       method: "POST",
       headers: {"Content-Type":"application/json"
     },
@@ -42,11 +88,14 @@
       return response.json()
     })
     .then(data => console.log(data))
-    .catch(error => console.log("ERROR"))
+    .catch(error => console.log("ERROR")) 
+*/
+
+/* CHALLENGE - querySelector
 
     const myForm = document.querySelector("form");
 
-    myForm.addEventListener("#submit", event => {
+    myForm.addEventListener("submit", event => {
       event.preventDefault();
 
       const name = document.querySelector("#name").value;
@@ -68,25 +117,35 @@
     .catch(error => console.log("ERROR"))
 
   })
+*/
+
+/* CHALLENGE - new FormData()
+
+const myForm = document.querySelector("form");
+
+myForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const formData = new FormData(myForm);
+  const data = Object.fromEntries(formData)
+ 
+fetch("https://echo.oliverjam.workers.dev/json", {
+  method: "POST",
+  body: JSON.stringify(data),
+  headers: {"Content-Type":"application/json"
+}
+})
+.then (response => {
+  if (!response.ok) throw new Error(response.status);
+  return response.json()
+})
+.then(json => console.log(json))
+.catch(error => console.log("ERROR"))
+
+})
+
+*/
 
     </script>
-
-<!-- CHALLENGE 3 - Form  -->
-
-    <form>
-      <label for="name">Name</label>
-      <input type="text" id="name">
-
-      <label for="email">Email</label>
-      <input type="email" id="email">
-
-      <button type="submit" id="submit">Log in</input>
-    </form>
-
-    
- 
-
-
-
   </body>
 </html>
