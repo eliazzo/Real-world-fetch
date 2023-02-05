@@ -26,6 +26,8 @@
 
       <button type="submit" id="submit">Search</button>
 
+      <output></output>
+
     </form>
 
     <script>
@@ -33,21 +35,41 @@
       /* WORKSHOP */
 
       const myForm = document.querySelector("form");
+      const output = document.querySelector("output");
 
-      myForm.addEventListener("submit", event => {
+      myForm.addEventListener("submit", (event) => {
       event.preventDefault();
 
+      // clear out any previous results
+      output.innerHTML = "";
+      
+
+      // get the value of the field with name="pokemon"
       const formData = new FormData(myForm);
-      const data = formData.get("pokemon");
+      const name = formData.get("pokemon");
 
       fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
         .then((response) => {
           if (!response.ok) throw new Error(response.status);
-          return response.json();
+          return response.json(); // throw error if there is a problem
         })
-        .then((json) => console.log(json))
-        .catch((error) => console.error(error));
-  });
+        // if the response is succesfful
+        .then((pokemonData) => {
+          const displayName = document.createElement("h2");
+          displayName.innerText = pokemonData.name;
+
+          // const displayImage = document.createElement("img");
+          // image.src = pokemonData.sprites.front_default;
+          // image.alt = "";
+
+          output.append(displayName);
+
+        }
+  );
+      
+
+})
+      
       
 
 
